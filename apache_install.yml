@@ -1,0 +1,21 @@
+---
+- name: Setup Apache Web Servers
+  hosts: apache
+  become: yes
+
+  tasks:
+    - name: Install Apache
+      yum:
+        name: httpd
+        state: present
+
+    - name: Start and Enable Apache
+      service:
+        name: httpd
+        state: started
+        enabled: true
+
+    - name: Deploy static HTML page
+      copy:
+        content: "<h1>Welcome to Apache Server via Ansible</h1>"
+        dest: /var/www/html/index.html
